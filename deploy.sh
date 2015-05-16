@@ -1,21 +1,20 @@
 #!/bin/bash
 
 
-tarball="https://github.com/104012/shell_configs/tarball/master"
-
 function fetch() {
-    if hash git 2> /dev/null; then
-        git pull origin master
-    else
-        curl -L $tarball | tar zx --strip=1
-    fi
+    local tarball="https://github.com/104012/shell_configs/tarball/master"
+    curl -L $tarball | tar zx --strip=1
 }
 
 function vimrc() {
     local src="vimrc"
     local dest="$HOME/.vimrc"
 
-    cp -i $src $dest
+    if [[ -e $dest ]]; then
+        cp $dest ${dest}.old
+    fi
+
+    cp -f $src $dest
 }
 
 function bashrc() {
@@ -23,12 +22,12 @@ function bashrc() {
     local dest="$HOME/.bashrc"
 
     if [[ -e $dest ]]; then
-        cat $src >> $dest
-    else
-        cp -i $src $dest
+        cp $dest ${dest}.old
     fi
+
+    cp -f $src $dest
 }
 
-fetch
+#fetch
 vimrc
 bashrc
