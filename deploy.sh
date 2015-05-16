@@ -20,7 +20,7 @@ cleanup() {
 
     rm -f $src
     if [[ -e ${src}.old ]]; then
-        cp ${src}.old $src 
+        cp ${src}.old $src
     fi
 }
 
@@ -45,6 +45,17 @@ update() {
     ./deploy.sh install
 }
 
+prompt() {
+    while true; do
+        read -p "$1" yn
+        case $yn in
+            [Yy]*) return 0;;
+            [Nn]*) return 1;;
+            *) echo "Yes or no?"
+        esac
+    done
+}
+
 
 main() {
     case "$1" in
@@ -58,7 +69,9 @@ main() {
             fetch
             ;;
         "update")
-            update
+            prompt "This will delete current configs. Continue? " \
+                || exit 1
+            echo "continue"
             ;;
     esac
 }
