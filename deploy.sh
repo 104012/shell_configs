@@ -1,33 +1,63 @@
 #!/bin/bash
 
+bashrc="$HOME/.bashrc"
+vimrc="$HOME/.vimrc"
 
-function fetch() {
+
+install() {
+    local src="$1"
+    local dest="$2"
+
+    if [[ -e $dest ]]; then
+        cp $dest ${dest}.old
+    fi
+
+    cp -f $src $dest
+}
+
+cleanup() {
+    local src="$1"
+
+    rm -f $src
+    if [[ -e ${src}.old ]]; then
+        cp ${src}.old $src 
+    fi
+}
+
+install_all() {
+    install bashrc $bashrc
+    install vimrc $vimrc
+}
+
+clean_all() {
+    cleanup $bashrc
+    cleanup $vimrc
+}
+
+fetch() {
     local tarball="https://github.com/104012/shell_configs/tarball/master"
-    curl -L $tarball | tar zx --strip=1
+    curl -L $tarball | tar pzx --strip=1
 }
 
-function vimrc() {
-    local src="vimrc"
-    local dest="$HOME/.vimrc"
-
-    if [[ -e $dest ]]; then
-        cp $dest ${dest}.old
-    fi
-
-    cp -f $src $dest
+update() {
+    fetch
+    clean_all
+    ./deploy.sh install
 }
 
-function bashrc() {
-    local src="bashrc"
-    local dest="$HOME/.bashrc"
 
-    if [[ -e $dest ]]; then
-        cp $dest ${dest}.old
-    fi
-
-    cp -f $src $dest
+main() {
+    case "$1" in
+        "install")
+            install_all
+            ;;
+        "clean")
+            clean_all
+            ;;
+        "update")
+            update
+            ;;
+    esac
 }
 
-#fetch
-vimrc
-bashrc
+main "$@"
