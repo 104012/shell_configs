@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function fetch() {
+    git pull origin master
+}
+
 function vimrc() {
     local src="vimrc"
     local dest="$HOME/.vimrc"
@@ -18,5 +22,6 @@ function bashrc() {
     fi
 }
 
+fetch
 vimrc
 bashrc
