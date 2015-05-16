@@ -1,7 +1,14 @@
 #!/bin/bash
 
+
+tarball="https://github.com/104012/shell_configs/tarball/master"
+
 function fetch() {
-    git pull origin master
+    if hash git 2> /dev/null; then
+        git pull origin master
+    else
+        curl -L $tarball | tar zx --strip=1
+    fi
 }
 
 function vimrc() {
@@ -15,7 +22,7 @@ function bashrc() {
     local src="bashrc"
     local dest="$HOME/.bashrc"
 
-    if [[ -e ~/.bashrc ]]; then
+    if [[ -e "$dest" ]]; then
         cat "$src" >> "$dest"
     else
         cp -i "$src" "$dest"
