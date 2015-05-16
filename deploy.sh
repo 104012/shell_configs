@@ -54,6 +54,9 @@ main() {
         "clean")
             clean_all
             ;;
+        "fetch")
+            fetch
+            ;;
         "update")
             update
             ;;
