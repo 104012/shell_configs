@@ -71,7 +71,7 @@ main() {
         "update")
             prompt "This will delete current configs. Continue? " \
                 || exit 1
-            echo "continue"
+            update
             ;;
     esac
 }
