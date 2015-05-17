@@ -17,7 +17,7 @@ fi;
 
 function portquiz() {
     local port="${1-80}"
-    wget -qO- "portquiz.net:$port"
+    curl "portquiz.net:$port"
 }
 
 function speedtest() {
