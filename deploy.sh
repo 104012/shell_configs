@@ -60,6 +60,8 @@ prompt() {
 main() {
     case "$1" in
         "install")
+            prompt "This will move current *rc files to *rc.old. Continue? " \
+                || exit 1
             install_all
             ;;
         "clean")
@@ -69,9 +71,10 @@ main() {
             fetch
             ;;
         "update")
-            prompt "This will delete current configs. Continue? " \
+            prompt "This will delete current *rc files. Continue? " \
                 || exit 1
-            update
+            clean_all
+            install_all
             ;;
     esac
 }
