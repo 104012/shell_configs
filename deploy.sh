@@ -20,7 +20,7 @@ cleanup() {
 
     rm -f $src
     if [[ -e ${src}.old ]]; then
-        cp ${src}.old $src
+        mv ${src}.old $src
     fi
 }
 
