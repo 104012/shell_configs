@@ -1,5 +1,8 @@
 ### CUSTOM SHELL
 
+[ -f /etc/bash.bashrc ] && source /etc/bash.bashrc
+[ -f /etc/bashrc ] && source /etc/bashrc
+
 # alias
 alias ls="ls --color=auto"
 alias ll="ls -la"

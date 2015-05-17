@@ -9,7 +9,7 @@ install() {
     local dest="$2"
 
     if [[ -e $dest ]]; then
-        cp $dest ${dest}.old
+        cp -i $dest ${dest}.old
     fi
 
     cp -f $src $dest
